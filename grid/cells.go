@@ -13,14 +13,23 @@ package grid
 //
 // TODO
 func New(rows, cols int, value string) [][]string {
-	return nil
+	grid := [][]string{}
+
+	for range rows {
+		row := []string{}
+		for range cols {
+			row = append(row, value)
+		}
+		grid = append(grid, row)
+	}
+	return grid
 }
 
 // Rows erwartet ein Spielfeld und liefert die Anzahl seiner Zeilen.
 //
 // TODO
 func Rows(cells [][]string) int {
-	return 0
+	return len(cells)
 }
 
 // Cols erwartet ein Spielfeld und liefert die Anzahl seiner Spalten,
@@ -28,7 +37,10 @@ func Rows(cells [][]string) int {
 //
 // TODO
 func Cols(cells [][]string) int {
-	return 0
+	if Rows(cells) == 0 {
+		return 0
+	}
+	return len(cells[0])
 }
 
 // Get erwartet ein Spielfeld und die Zeile `row` und Spalte `col` einer Zelle
@@ -36,7 +48,7 @@ func Cols(cells [][]string) int {
 //
 // TODO
 func Get(cells [][]string, row, col int) string {
-	return ""
+	return cells[row][col]
 }
 
 // Set erwartet ein Spielfeld, die Zeile `row` und Spalte `col` einer Zelle
@@ -45,6 +57,7 @@ func Get(cells [][]string, row, col int) string {
 //
 // TODO
 func Set(cells [][]string, row, col int, value string) {
+	cells[row][col] = value
 }
 
 // Format erwartet ein Spielfeld und liefert es als Text zur Ausgabe:
@@ -53,5 +66,16 @@ func Set(cells [][]string, row, col int, value string) {
 //
 // TODO
 func Format(cells [][]string) string {
-	return ""
+	results := ""
+
+	for i := range cells {
+		for j := range cells[i] {
+			if j > 0 {
+				results += " "
+			}
+			results += cells[i][j]
+		}
+		results += "\n"
+	}
+	return results
 }
