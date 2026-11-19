@@ -9,7 +9,12 @@ package grid
 //
 // TODO
 func Row(cells [][]string, index int) []string {
-	return nil
+	result := []string{}
+
+	for _, value := range cells[index] {
+		result = append(result, value)
+	}
+	return result
 }
 
 // Col erwartet ein Spielfeld und die Nummer `index` einer Spalte
