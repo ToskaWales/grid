@@ -59,9 +59,11 @@ func main() {
 func printResult(cells [][]string) {
 	if tictactoe.Wins(cells, "X") {
 		fmt.Println("X wins")
+		return
 	}
 	if tictactoe.Wins(cells, "O") {
 		fmt.Println("O wins")
+		return
 	} else {
 		fmt.Println("hahahahha")
 	}
