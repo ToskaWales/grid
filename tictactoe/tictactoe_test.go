@@ -24,7 +24,7 @@ func ExamplePlace() {
 	// false
 	// false
 	// false
-	// [[X . .] [. . O] [. . .]]
+	// [[X . .] [. . .] [O . .]]
 }
 
 func ExampleNextPlayer() {

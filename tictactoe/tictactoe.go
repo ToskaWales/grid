@@ -35,7 +35,18 @@ func NewBoard() [][]string {
 //
 // TODO
 func Place(cells [][]string, field int, player string) bool {
-	return false
+	if field < 1 || field > 9 {
+		return false
+	}
+	row := field / 3
+	col := field % 3
+
+	if cells[row][col] != Empty {
+		return false
+	}
+
+	grid.Set(cells, row, col, player)
+	return true
 }
 
 // NextPlayer erwartet das Symbol, das gerade am Zug war, und liefert
@@ -43,7 +54,10 @@ func Place(cells [][]string, field int, player string) bool {
 //
 // TODO
 func NextPlayer(player string) string {
-	return ""
+	if player == "X" {
+		return "O"
+	}
+	return "X"
 }
 
 // Wins erwartet ein Spielfeld und ein Symbol und liefert `true`, wenn eine
@@ -51,7 +65,14 @@ func NextPlayer(player string) string {
 //
 // TODO
 func Wins(cells [][]string, player string) bool {
-	return false
+	return grid.AllEqual(grid.Row(cells, 0), player) ||
+		grid.AllEqual(grid.Row(cells, 1), player) ||
+		grid.AllEqual(grid.Row(cells, 2), player) ||
+		grid.AllEqual(grid.Col(cells, 0), player) ||
+		grid.AllEqual(grid.Col(cells, 1), player) ||
+		grid.AllEqual(grid.Col(cells, 2), player) ||
+		grid.AllEqual(grid.Diagonal(cells), player) ||
+		grid.AllEqual(grid.AntiDiagonal(cells), player)
 }
 
 // Winner erwartet ein Spielfeld und liefert das Symbol, das gewonnen hat,
@@ -59,6 +80,12 @@ func Wins(cells [][]string, player string) bool {
 //
 // TODO
 func Winner(cells [][]string) string {
+	if Wins(cells, "X") {
+		return "X"
+	}
+	if Wins(cells, "O") {
+		return "O"
+	}
 	return ""
 }
 
@@ -66,7 +93,7 @@ func Winner(cells [][]string) string {
 //
 // TODO
 func IsFull(cells [][]string) bool {
-	return false
+	return !grid.Contains(cells, Empty)
 }
 
 // GameOver erwartet ein Spielfeld und liefert `true`, wenn das Spiel vorbei ist,
@@ -74,5 +101,5 @@ func IsFull(cells [][]string) bool {
 //
 // TODO
 func GameOver(cells [][]string) bool {
-	return false
+	return IsFull(cells) || Wins(cells, "X") || Wins(cells, "O")
 }
